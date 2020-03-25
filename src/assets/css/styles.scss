@@ -107,7 +107,7 @@ header {
     border: 1px solid #444;
     height: 40px;
     padding: 0 10px;
-    transition: all ease-in 0.3s;
+    transition: all ease-out 0.2s;
     cursor: pointer;
     @media screen and (max-width: $mobile) {
         font-size: 12px;
