@@ -9,6 +9,7 @@ import Backdrop from "../components/Backdrop/Backdrop";
 
 import {sortFunction} from "../utils/Sort";
 import {tagFunction} from "../utils/TagFilter";
+import {getLocation} from "../utils/Location";
 
 import data from "../services/restaurants.json";
 
@@ -18,6 +19,7 @@ export default function Layout() {
 	const [tag, setTag] = useState(null);
 	const [restaurants, setRestaurants] = useState(data.restaurants);
 	const [openModal, setOpenModal] = useState(false);
+	const [location, setLocation] = useState({name: "", lat: null, lng: null});
 
 	const showOnlineHandler = () => {
 		setIsOnline(!isOnline);
@@ -41,7 +43,17 @@ export default function Layout() {
 	const viewFullItemsHandler = () => {
 		setTag(null);
 	};
+	const googleMapHandler = e => {
+		e.preventDefault();
 
+		setLocation(
+			getLocation(
+				e.target.getAttribute("data-map"),
+				e.target.getAttribute("data-name")
+			)
+		);
+		setOpenModal(true);
+	};
 	const loadData = () => {
 		let dataValue;
 
@@ -64,16 +76,16 @@ export default function Layout() {
 
 	useEffect(() => {
 		loadData();
-	}, [sort, isOnline, tag]);
+	}, [sort, isOnline, tag, location]);
 
 	return (
 		<div>
 			<Header />
 
 			<Modal
-				// lat={this.state.location.lat}
-				// lng={this.state.location.lng}
-				// name={this.state.location.name}
+				lat={location.lat}
+				lng={location.lng}
+				name={location.name}
 				show={openModal}
 				closeModal={closeModalHandler}
 			/>
@@ -90,6 +102,7 @@ export default function Layout() {
 					tagFilter={tagFilterHandler}
 					activeTag={tag}
 					viewFullItems={viewFullItemsHandler}
+					mapLocation={googleMapHandler}
 				/>
 			</main>
 			<Footer />
