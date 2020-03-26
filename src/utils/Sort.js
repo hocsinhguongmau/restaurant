@@ -23,4 +23,14 @@ const sortNameDesc = variable => {
 	});
 };
 
-export {sortNameAsc,sortNameDesc};
+const sortFunction = (sortData, sortValue) => {
+	const newArray = [...sortData];
+	if (sortValue === "0") {
+		sortNameAsc(newArray);
+	} else if (sortValue === "1") {
+		sortNameDesc(newArray);
+	}
+	return newArray;
+};
+
+export {sortFunction};
