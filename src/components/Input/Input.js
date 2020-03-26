@@ -1,6 +1,6 @@
 import React from "react";
 
-const Sort = props => (
+const Input = props => (
 	<div className="sort">
 		<select
 			defaultValue={"DEFAULT"}
@@ -22,4 +22,4 @@ const Sort = props => (
 	</div>
 );
 
-export default Sort;
+export default Input;

@@ -2,35 +2,12 @@ import React, {useState, useEffect, useLayoutEffect, useCallback} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Restaurants from "../components/Restaurants/Restaurants";
-import Sort from "../components/Sort/Sort";
+import Input from "../components/Input/Input";
 import Welcome from "../components/Welcome/Welcome";
 
+import {sortNameAsc, sortNameDesc} from "../utils/Sort";
+
 import data from "../services/restaurants.json";
-
-const sortNameAsc = variable => {
-	variable.sort((a, b) => {
-		if (a.name.toUpperCase() > b.name.toUpperCase()) {
-			return 1;
-		}
-		if (b.name.toUpperCase() > a.name.toUpperCase()) {
-			return -1;
-		}
-
-		return 0;
-	});
-};
-const sortNameDesc = variable => {
-	variable.sort((a, b) => {
-		if (a.name.toUpperCase() < b.name.toUpperCase()) {
-			return 1;
-		}
-		if (b.name.toUpperCase() < a.name.toUpperCase()) {
-			return -1;
-		}
-
-		return 0;
-	});
-};
 
 export default function Layout() {
 	const [isOnline, setIsOnline] = useState(false);
@@ -47,7 +24,7 @@ export default function Layout() {
 
 	const loadData = () => {
 		let dataValue = restaurants;
-		const sortFunction = sortData => {
+		const sortFunction = (sortData) => {
 			const newArray = [...sortData];
 			if (sort === "0") {
 				sortNameAsc(newArray);
@@ -76,7 +53,7 @@ export default function Layout() {
 	return (
 		<div>
 			<Header />
-			<Sort
+			<Input
 				online={isOnline}
 				showOnlineClick={showOnlineHandler}
 				sort={sortingHandler}
