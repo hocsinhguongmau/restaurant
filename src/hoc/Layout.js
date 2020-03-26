@@ -4,6 +4,8 @@ import Footer from "../components/Footer";
 import Restaurants from "../components/Restaurants/Restaurants";
 import Input from "../components/Input/Input";
 import Welcome from "../components/Welcome/Welcome";
+import Modal from "../components/Modal/Modal";
+import Backdrop from "../components/Backdrop/Backdrop";
 
 import {sortFunction} from "../utils/Sort";
 import {tagFunction} from "../utils/TagFilter";
@@ -15,6 +17,7 @@ export default function Layout() {
 	const [sort, setSort] = useState(null);
 	const [tag, setTag] = useState(null);
 	const [restaurants, setRestaurants] = useState(data.restaurants);
+	const [openModal, setOpenModal] = useState(false);
 
 	const showOnlineHandler = () => {
 		setIsOnline(!isOnline);
@@ -30,12 +33,21 @@ export default function Layout() {
 		setTag(dataTag);
 	};
 
+	const closeModalHandler = e => {
+		e.preventDefault();
+		setOpenModal(false);
+	};
+
+	const viewFullItemsHandler = () => {
+		setTag(null);
+	};
+
 	const loadData = () => {
 		let dataValue;
 
 		if (isOnline) {
 			dataValue = tagFunction(
-				restaurants.filter(
+				data.restaurants.filter(
 					restaurant => restaurant.online === isOnline
 				),
 				tag
@@ -57,6 +69,15 @@ export default function Layout() {
 	return (
 		<div>
 			<Header />
+
+			<Modal
+				// lat={this.state.location.lat}
+				// lng={this.state.location.lng}
+				// name={this.state.location.name}
+				show={openModal}
+				closeModal={closeModalHandler}
+			/>
+			<Backdrop show={openModal} closeModal={closeModalHandler} />
 			<Input
 				online={isOnline}
 				showOnlineClick={showOnlineHandler}
@@ -64,7 +85,12 @@ export default function Layout() {
 			/>
 			<main>
 				<Welcome />
-				<Restaurants data={restaurants} tagFilter={tagFilterHandler} />
+				<Restaurants
+					data={restaurants}
+					tagFilter={tagFilterHandler}
+					activeTag={tag}
+					viewFullItems={viewFullItemsHandler}
+				/>
 			</main>
 			<Footer />
 		</div>

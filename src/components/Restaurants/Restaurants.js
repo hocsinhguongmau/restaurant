@@ -5,6 +5,12 @@ import Restaurant from "./Restaurant/Restaurant";
 const Restaurants = props => {
 	return (
 		<div className="container clearfix">
+			{props.activeTag !== null ? (
+				<button onClick={props.viewFullItems} className="back-btn">Go back</button>
+			) : (
+				""
+			)}
+
 			{props.data.map((item, index) => (
 				<Restaurant
 					key={`restaurant-${index}`}
