@@ -81,14 +81,15 @@ export default function Layout() {
 	return (
 		<div>
 			<Header />
-
-			<Modal
-				lat={location.lat}
-				lng={location.lng}
-				name={location.name}
-				show={openModal}
-				closeModal={closeModalHandler}
-			/>
+			<div style={{fontSize: 0}}>
+				<Modal
+					lat={location.lat}
+					lng={location.lng}
+					name={location.name}
+					show={openModal}
+					closeModal={closeModalHandler}
+				/>
+			</div>
 			<Backdrop show={openModal} closeModal={closeModalHandler} />
 			<Input
 				online={isOnline}
